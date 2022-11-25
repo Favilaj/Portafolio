@@ -10,112 +10,107 @@ using Portafolio.Models;
 
 namespace Portafolio.Controllers
 {
-    public class HabilidadController : Controller
+    public class UsuarioController : Controller
     {
         private portafolioEntities1 db = new portafolioEntities1();
 
-        // GET: Habilidad
+        // GET: Usuario
         public ActionResult Index()
         {
-            var habilidad = db.Habilidad.Include(h => h.AspNetUsers);
-            return View(habilidad.ToList());
+            return View(db.AspNetUsers.ToList());
         }
 
-        // GET: Habilidad/Details/5
+        // GET: Usuario/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Habilidad habilidad = db.Habilidad.Find(id);
-            if (habilidad == null)
+            AspNetUsers aspNetUsers = db.AspNetUsers.Find(id);
+            if (aspNetUsers == null)
             {
                 return HttpNotFound();
             }
-            return View(habilidad);
+            return View(aspNetUsers);
         }
 
-        // GET: Habilidad/Create
+        // GET: Usuario/Create
         public ActionResult Create()
         {
-            ViewBag.UsuarioId = new SelectList(db.AspNetUsers, "Id", "Email");
             return View();
         }
 
-        // POST: Habilidad/Create
+        // POST: Usuario/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,UsuarioId,Nombre,Descripcion,Porcentaje")] Habilidad habilidad)
+        public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,Direccion,Ciudad,Pais,Telefono,Facebook,Twitter,Youtube,Instagram,Photo")] AspNetUsers aspNetUsers)
         {
             if (ModelState.IsValid)
             {
-                db.Habilidad.Add(habilidad);
+                db.AspNetUsers.Add(aspNetUsers);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UsuarioId = new SelectList(db.AspNetUsers, "Id", "Email", habilidad.UsuarioId);
-            return View(habilidad);
+            return View(aspNetUsers);
         }
 
-        // GET: Habilidad/Edit/5
+        // GET: Usuario/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Habilidad habilidad = db.Habilidad.Find(id);
-            if (habilidad == null)
+            AspNetUsers aspNetUsers = db.AspNetUsers.Find(id);
+            if (aspNetUsers == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UsuarioId = new SelectList(db.AspNetUsers, "Id", "Email", habilidad.UsuarioId);
-            return View(habilidad);
+            return View(aspNetUsers);
         }
 
-        // POST: Habilidad/Edit/5
+        // POST: Usuario/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,UsuarioId,Nombre,Descripcion,Porcentaje")] Habilidad habilidad)
+        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,Direccion,Ciudad,Pais,Telefono,Facebook,Twitter,Youtube,Instagram,Photo")] AspNetUsers aspNetUsers)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(habilidad).State = EntityState.Modified;
+                db.Entry(aspNetUsers).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UsuarioId = new SelectList(db.AspNetUsers, "Id", "Email", habilidad.UsuarioId);
-            return View(habilidad);
+            return View(aspNetUsers);
         }
 
-        // GET: Habilidad/Delete/5
+        // GET: Usuario/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Habilidad habilidad = db.Habilidad.Find(id);
-            if (habilidad == null)
+            AspNetUsers aspNetUsers = db.AspNetUsers.Find(id);
+            if (aspNetUsers == null)
             {
                 return HttpNotFound();
             }
-            return View(habilidad);
+            return View(aspNetUsers);
         }
 
-        // POST: Habilidad/Delete/5
+        // POST: Usuario/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Habilidad habilidad = db.Habilidad.Find(id);
-            db.Habilidad.Remove(habilidad);
+            AspNetUsers aspNetUsers = db.AspNetUsers.Find(id);
+            db.AspNetUsers.Remove(aspNetUsers);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
